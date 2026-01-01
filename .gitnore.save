@@ -1,0 +1,9 @@
+(base) kwame@Kwames-MacBook-Pro ticket % node_modules/
+dist/
+.env
+.env.local
+.vite/
+
+
+
+
