@@ -48,7 +48,7 @@ const Navbar = () => {
                     ))}
                     <a
                         href="#tickets"
-                        className="px-6 py-2 border border-accent text-accent hover:bg-accent hover:text-black transition-all duration-300 rounded-none font-bold uppercase tracking-wider text-sm btn-hover"
+                        className="px-6 py-2 border border-accent text-accent hover:bg-accent hover:text-black transition-all duration-300 rounded-none font-bold uppercase tracking-wider text-sm hover:scale-105 transition-transform duration-200 active:scale-95"
                     >
                         Get Access
                     </a>

@@ -21,13 +21,38 @@ const EventPage = () => {
         }
 
         const fetchEvent = async () => {
-            const { data, error } = await supabase
-                .from('events')
-                .select('*')
-                .eq('id', id)
-                .single();
+            // Priority 1: Supabase (Real Data)
+            try {
+                const { data, error } = await supabase
+                    .from('events')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
 
-            if (data) setEvent(data);
+                if (data) {
+                    setEvent(data);
+                    setLoading(false);
+                    return;
+                }
+
+                if (error) {
+                    console.warn("Supabase fetch error (might be offline or invalid key):", error);
+                }
+            } catch (err) {
+                console.error("Fetch exception:", err);
+            }
+
+            // Priority 2: Local Storage (Fallback for demo/offline)
+            const storedEvents = JSON.parse(localStorage.getItem('ticket_nexus_events') || '[]');
+            const localEvent = storedEvents.find(e => e.id.toString() === id);
+
+            if (localEvent) {
+                console.log("Found event in Local Storage:", localEvent);
+                setEvent(localEvent);
+            } else {
+                console.log("Event not found anywhere for ID:", id);
+            }
+
             setLoading(false);
         };
 
@@ -43,6 +68,13 @@ const EventPage = () => {
     };
 
     const [manualDate, setManualDate] = useState(null);
+    const [isOrganizer, setIsOrganizer] = useState(false);
+
+    useEffect(() => {
+        const session = localStorage.getItem('ticket_nexus_session');
+        setIsOrganizer(!!session);
+    }, []);
+
     const eventData = event || mockEvent;
     const finalDate = manualDate || eventData.date;
 
@@ -50,21 +82,11 @@ const EventPage = () => {
         <>
             <Navbar />
 
-            {/* Demo Date Picker */}
-            <div className="fixed top-24 right-6 z-50 animate-fade-in">
-                <div className="glass-card p-2 rounded-lg border border-accent/20 flex flex-col items-end">
-                    <label className="text-[10px] uppercase tracking-widest text-accent mb-1 font-bold">Set Target Date</label>
-                    <input
-                        type="datetime-local"
-                        className="bg-black/80 text-white text-xs p-2 rounded border border-white/10 outline-none focus:border-accent"
-                        onChange={(e) => setManualDate(e.target.value)}
-                    />
-                </div>
-            </div>
+            <Navbar />
 
             <Hero title={eventData.title} eventDate={finalDate} />
             <EventDetails location={eventData.location} date={finalDate} />
-            <TicketCards basePrice={eventData.ticket_price} />
+            <TicketCards basePrice={eventData.ticket_price} ticketTiers={eventData.ticket_tiers} />
             <Footer />
         </>
     );

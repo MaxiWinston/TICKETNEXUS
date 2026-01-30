@@ -26,6 +26,7 @@ const PaymentPage = () => {
     const componentProps = {
         email,
         amount: amountInKobo,
+        currency: 'GHS',
         metadata: {
             name,
             phone,
@@ -37,7 +38,7 @@ const PaymentPage = () => {
                 }
             ]
         },
-        publicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || 'pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', // Fallback for dev only
+        publicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY,
         text: "Pay Now",
         onSuccess: (reference) => handleSuccess(reference),
         onClose: () => alert("Transaction cancelled"),
@@ -90,7 +91,7 @@ const PaymentPage = () => {
                 <motion.div
                     initial={{ scale: 0.9, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="glass-card max-w-md w-full p-8 text-center relative z-10 rounded-2xl border-accent/30"
+                    className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl transition-all duration-300 max-w-md w-full p-8 text-center relative z-10 rounded-2xl border-accent/30"
                 >
                     <div className="w-20 h-20 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-6">
                         <CheckCircle className="w-10 h-10 text-accent" />
@@ -129,7 +130,7 @@ const PaymentPage = () => {
                         <h1 className="text-4xl font-bold mb-2">Checkout</h1>
                         <p className="text-gray-400 mb-8">Complete your purchase to secure your spot.</p>
 
-                        <div className="glass-card p-8 rounded-2xl mb-8">
+                        <div className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl transition-all duration-300 p-8 rounded-2xl mb-8">
                             <h3 className="text-sm uppercase tracking-widest text-gray-400 mb-6">Order Summary</h3>
                             <div className="flex justify-between items-center mb-4 pb-4 border-b border-white/10">
                                 <div>
@@ -150,7 +151,7 @@ const PaymentPage = () => {
                     </div>
 
                     {/* Payment Form */}
-                    <div className="glass-card p-8 rounded-2xl">
+                    <div className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl transition-all duration-300 p-8 rounded-2xl">
                         <h3 className="text-sm uppercase tracking-widest text-gray-400 mb-6">Customer Details</h3>
 
                         <form onSubmit={handleSubmit} className="space-y-6">

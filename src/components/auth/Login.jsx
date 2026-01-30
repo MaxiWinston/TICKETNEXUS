@@ -16,17 +16,22 @@ const Login = () => {
         setLoading(true);
         setError(null);
 
-        // Dummy Authentication Logic
-        setTimeout(() => {
-            if (email && password) {
-                // Set a mock session in localStorage if needed, or just navigate
-                localStorage.setItem('ticket_nexus_session', 'true');
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email,
+                password,
+            });
+
+            if (error) throw error;
+
+            if (data.user) {
                 navigate('/dashboard');
-            } else {
-                setError("Please enter a valid email and password");
             }
+        } catch (err) {
+            setError(err.message);
+        } finally {
             setLoading(false);
-        }, 1000);
+        }
     };
 
     return (
@@ -38,7 +43,7 @@ const Login = () => {
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="glass-card max-w-md w-full p-8 relative z-10 rounded-2xl border-accent/20"
+                className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl transition-all duration-300 max-w-md w-full p-8 relative z-10 rounded-2xl border-accent/20"
             >
                 <h2 className="text-3xl font-bold text-white mb-2 text-center">Welcome Back</h2>
                 <p className="text-gray-400 mb-8 text-center">Login to manage your events</p>
@@ -87,17 +92,6 @@ const Login = () => {
                     >
                         {loading ? 'Loading...' : 'Sign In'}
                         {!loading && <ArrowRight className="w-5 h-5" />}
-                    </button>
-
-                    <button
-                        type="button"
-                        onClick={() => {
-                            localStorage.setItem('ticket_nexus_session', 'true');
-                            navigate('/dashboard');
-                        }}
-                        className="w-full py-4 bg-white/5 border border-white/10 text-white font-bold uppercase tracking-wider hover:bg-white/10 transition-all duration-300 rounded-lg mt-4"
-                    >
-                        Login as Guest
                     </button>
                 </form>
 

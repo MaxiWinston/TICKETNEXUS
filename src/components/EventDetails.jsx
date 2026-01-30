@@ -36,7 +36,7 @@ const EventDetails = ({ location, date }) => {
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.1, duration: 0.5 }}
-                            className="glass-card p-6 rounded-xl border border-white/10 hover:border-accent/40 transition-colors group"
+                            className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl transition-all duration-300 p-6 rounded-xl border border-white/10 hover:border-accent/40 transition-colors group"
                         >
                             <div className="mb-4 bg-white/5 w-12 h-12 rounded-full flex items-center justify-center group-hover:bg-accent/20 transition-colors">
                                 {item.icon}

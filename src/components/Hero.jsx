@@ -79,14 +79,16 @@ const Hero = ({ title, eventDate }) => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.8, duration: 0.8 }}
                 >
-                    <a
+                    <motion.a
                         href="#tickets"
-                        className="group relative inline-flex items-center gap-3 px-8 py-4 bg-accent text-black font-bold text-lg uppercase tracking-wider hover:bg-white transition-all duration-300"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="group relative inline-flex items-center gap-3 px-8 py-4 bg-accent text-black font-bold text-lg uppercase tracking-wider hover:bg-white transition-colors duration-300"
                     >
                         Get Tickets
                         <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                         <div className="absolute inset-0 bg-white/20 blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    </a>
+                    </motion.a>
                 </motion.div>
             </div>
         </section>

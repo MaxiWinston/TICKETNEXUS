@@ -16,18 +16,37 @@ const Signup = () => {
         setLoading(true);
         setError(null);
 
-        // Mock Signup
-        setTimeout(() => {
-            if (password !== confirmPassword) {
-                setError("Passwords do not match");
-                setLoading(false);
-                return;
-            }
-            // Auto login after signup for demo
-            localStorage.setItem('ticket_nexus_session', 'true');
-            navigate('/dashboard');
+        // Simple password length validation
+        if (password.length < 6) {
+            setError("Password must be at least 6 characters");
             setLoading(false);
-        }, 1000);
+            return;
+        }
+
+        try {
+            const { data, error } = await supabase.auth.signUp({
+                email,
+                password,
+            });
+
+            if (error) throw error;
+
+            if (data.user) {
+                // Check if email confirmation is required (session might be null if so)
+                if (data.session) {
+                    localStorage.setItem('ticket_nexus_session', JSON.stringify(data.session));
+                    navigate('/dashboard');
+                } else {
+                    // Start a countdown or show instructions to check email
+                    alert("Account created! Please check your email to confirm your account before logging in.");
+                    navigate('/login');
+                }
+            }
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -39,7 +58,7 @@ const Signup = () => {
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="glass-card max-w-md w-full p-8 relative z-10 rounded-2xl border-accent/20"
+                className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl transition-all duration-300 max-w-md w-full p-8 relative z-10 rounded-2xl border-accent/20"
             >
                 <h2 className="text-3xl font-bold text-white mb-2 text-center">Create Account</h2>
                 <p className="text-gray-400 mb-8 text-center">Start selling tickets today</p>

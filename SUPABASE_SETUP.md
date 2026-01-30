@@ -58,6 +58,9 @@ create policy "Events are viewable by everyone." on events for select using ( tr
 create policy "Users can insert their own events." on events for insert with check ( auth.uid() = organizer_id );
 create policy "Users can update own events." on events for update using ( auth.uid() = organizer_id );
 
+-- Update: Add ticket_tiers column
+alter table events add column ticket_tiers jsonb default '[]'::jsonb;
+
 -- Create Tickets table
 create table tickets (
   id uuid default gen_random_uuid() primary key,
