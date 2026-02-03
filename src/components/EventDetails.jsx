@@ -1,8 +1,25 @@
 import React from 'react';
-import { Calendar, Clock, MapPin, Instagram } from 'lucide-react';
+import { Calendar, Clock, MapPin, Share2, Shirt } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-const EventDetails = ({ location, date }) => {
+const EventDetails = ({ location, date, dressCode }) => {
+    const handleShare = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: document.title,
+                    text: 'Check out this event on TicketMost!',
+                    url: window.location.href,
+                });
+            } catch (err) {
+                console.error('Error sharing:', err);
+            }
+        } else {
+            navigator.clipboard.writeText(window.location.href);
+            alert('Link copied to clipboard!');
+        }
+    };
+
     const details = [
         {
             icon: <Calendar className="w-6 h-6 text-accent" />,
@@ -18,13 +35,16 @@ const EventDetails = ({ location, date }) => {
             icon: <MapPin className="w-6 h-6 text-accent" />,
             label: "Location",
             value: location || "Secret Warehouse, Accra"
-        },
-        {
-            icon: <Instagram className="w-6 h-6 text-accent" />,
-            label: "Dress Code",
-            value: "Cyberpunk / Black Tie"
         }
     ];
+
+    if (dressCode) {
+        details.push({
+            icon: <Shirt className="w-6 h-6 text-accent" />,
+            label: "Dress Code",
+            value: dressCode
+        });
+    }
 
     return (
         <section className="py-20 bg-black text-white relative z-10">
@@ -36,7 +56,7 @@ const EventDetails = ({ location, date }) => {
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.1, duration: 0.5 }}
-                            className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl transition-all duration-300 p-6 rounded-xl border border-white/10 hover:border-accent/40 transition-colors group"
+                            className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl transition-all duration-300 p-6 rounded-xl hover:border-accent/40 transition-colors group"
                         >
                             <div className="mb-4 bg-white/5 w-12 h-12 rounded-full flex items-center justify-center group-hover:bg-accent/20 transition-colors">
                                 {item.icon}
@@ -45,6 +65,17 @@ const EventDetails = ({ location, date }) => {
                             <p className="text-xl font-bold">{item.value}</p>
                         </motion.div>
                     ))}
+                </div>
+
+                {/* Mobile Share Button */}
+                <div className="md:hidden mt-8 flex justify-center">
+                    <button
+                        onClick={handleShare}
+                        className="flex items-center gap-2 bg-white/10 hover:bg-accent hover:text-black border border-white/20 px-6 py-3 rounded-full transition-all duration-300 font-bold"
+                    >
+                        <Share2 className="w-5 h-5" />
+                        Share Event
+                    </button>
                 </div>
             </div>
         </section>

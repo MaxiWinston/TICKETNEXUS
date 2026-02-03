@@ -58,7 +58,7 @@ const Hero = ({ title, eventDate }) => {
                         The Exclusive Experience
                     </h2>
                     <h1 className="text-5xl md:text-8xl font-bold text-white mb-8 tracking-tighter shadow-xl">
-                        {title || "NEXUS NIGHT"}
+                        {title || "TICKET MOST"}
                     </h1>
                 </motion.div>
 

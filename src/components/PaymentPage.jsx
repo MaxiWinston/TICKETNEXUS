@@ -52,7 +52,7 @@ const PaymentPage = () => {
                 .from('tickets')
                 .insert([
                     {
-                        event_title: "NEXUS NIGHT", // Dynamic if needed
+                        event_title: "TICKET MOST", // Dynamic if needed
                         ticket_type: ticketType,
                         price: totalAmount,
                         customer_name: name,

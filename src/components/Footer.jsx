@@ -9,7 +9,7 @@ const Footer = () => {
                     <div className="flex items-center space-x-2 mb-6 md:mb-0">
                         <Ticket className="w-6 h-6 text-accent" />
                         <span className="text-xl font-bold font-display tracking-wider text-white">
-                            NEXUS<span className="text-accent">.</span>EVENT
+                            TICKET<span className="text-accent">MOST</span>
                         </span>
                     </div>
 
@@ -21,7 +21,7 @@ const Footer = () => {
                 </div>
 
                 <div className="mt-8 text-center md:text-left text-gray-600 text-sm">
-                    &copy; 2025 Nexus Events. All rights reserved.
+                    &copy; 2026 TicketMost. All rights reserved.
                 </div>
             </div>
         </footer>

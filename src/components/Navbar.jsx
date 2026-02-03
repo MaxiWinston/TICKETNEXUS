@@ -31,7 +31,7 @@ const Navbar = () => {
                 <div className="flex items-center space-x-2">
                     <Ticket className="w-8 h-8 text-accent" />
                     <span className="text-2xl font-bold font-display tracking-wider text-white">
-                        NEXUS<span className="text-accent">.</span>EVENT
+                        TICKET<span className="text-accent">MOST</span>
                     </span>
                 </div>
 

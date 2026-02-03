@@ -10,7 +10,7 @@ const PlatformHome = () => {
             <nav className="fixed w-full z-50 bg-black/50 backdrop-blur-lg border-b border-white/10">
                 <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                     <div className="text-2xl font-bold tracking-tighter">
-                        TICKET<span className="text-accent">NEXUS</span>
+                        TICKET<span className="text-accent">MOST</span>
                     </div>
                     <div className="flex items-center gap-6">
                         <Link to="/login" className="text-sm font-bold text-gray-300 hover:text-white transition-colors">

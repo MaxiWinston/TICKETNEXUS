@@ -61,7 +61,7 @@ const EventPage = () => {
 
     // Mock event data for immediate display (Fallback)
     const mockEvent = {
-        title: "NEXUS NIGHT",
+        title: "TICKET MOST",
         date: new Date(new Date().setDate(new Date().getDate() + 14)).toISOString(),
         location: "Secret Warehouse, Accra",
         ticket_price: 89
@@ -85,7 +85,7 @@ const EventPage = () => {
             <Navbar />
 
             <Hero title={eventData.title} eventDate={finalDate} />
-            <EventDetails location={eventData.location} date={finalDate} />
+            <EventDetails location={eventData.location} date={finalDate} dressCode={eventData.dress_code} />
             <TicketCards basePrice={eventData.ticket_price} ticketTiers={eventData.ticket_tiers} />
             <Footer />
         </>

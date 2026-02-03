@@ -15,6 +15,7 @@ const Dashboard = () => {
         date: '',
         location: '',
         description: '',
+        dress_code: '', // Optional Dress Code
         ticket_tiers: [] // Array of { name, price, perks }
     });
 
@@ -127,6 +128,7 @@ const Dashboard = () => {
                         date: new Date(newEvent.date).toISOString(),
                         location: newEvent.location,
                         description: newEvent.description || '',
+                        dress_code: newEvent.dress_code || '',
                         organizer_id: user.id,
                         ticket_tiers: newEvent.ticket_tiers,
                         ticket_price: lowestPrice
@@ -141,7 +143,7 @@ const Dashboard = () => {
             // Refresh list
             fetchEvents(user.id);
             setShowCreate(false);
-            setNewEvent({ title: '', date: '', location: '', description: '', ticket_tiers: [] });
+            setNewEvent({ title: '', date: '', location: '', description: '', dress_code: '', ticket_tiers: [] });
             setCurrentTier({ name: '', price: '', perks: '' });
             alert("Event created successfully!");
         } catch (error) {
@@ -201,6 +203,16 @@ const Dashboard = () => {
                                         onChange={e => setNewEvent({ ...newEvent, location: e.target.value })}
                                     />
                                 </div>
+                            </div>
+                            <div>
+                                <label className="block text-sm text-gray-400 mb-1">Dress Code (Optional)</label>
+                                <input
+                                    type="text"
+                                    className="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-white"
+                                    value={newEvent.dress_code}
+                                    onChange={e => setNewEvent({ ...newEvent, dress_code: e.target.value })}
+                                    placeholder="e.g. All Black, Formal, Cyberpunk"
+                                />
                             </div>
 
                             {/* Ticket Tiers Section */}
