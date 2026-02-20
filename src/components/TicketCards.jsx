@@ -56,7 +56,7 @@ const TicketCard = ({ title, price, features, delay, popular,event_id }) => {
     );
 };
 
-const TicketCards = ({ basePrice, ticketTiers }) => {
+const TicketCards = ({ basePrice, ticketTiers, event_id }) => {
     // Default tiers if no custom tiers are provided
     // Default tickets removed to prevent mock data display
     const defaultTickets = [];
@@ -96,7 +96,7 @@ const TicketCards = ({ basePrice, ticketTiers }) => {
                         </div>
                     ) : (
                         displayTickets.map((ticket, idx) => (
-                            <TicketCard key={idx} {...ticket} />
+                            <TicketCard key={idx} {...ticket} event_id={event_id} />
                         ))
                     )}
                 </div>
