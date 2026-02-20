@@ -3,11 +3,11 @@ import { Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-const TicketCard = ({ title, price, features, delay, popular }) => {
+const TicketCard = ({ title, price, features, delay, popular,event_id }) => {
     const navigate = useNavigate();
 
     const handleSelect = () => {
-        navigate('/payment', { state: { ticketType: title, price: price } });
+        navigate('/payment', { state: { ticketType: title, price: price,event_id:event_id } });
     };
 
     return (

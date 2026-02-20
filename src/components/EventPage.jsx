@@ -86,7 +86,7 @@ const EventPage = () => {
 
             <Hero title={eventData.title} eventDate={finalDate} />
             <EventDetails location={eventData.location} date={finalDate} dressCode={eventData.dress_code} />
-            <TicketCards basePrice={eventData.ticket_price} ticketTiers={eventData.ticket_tiers} />
+            <TicketCards basePrice={eventData.ticket_price} ticketTiers={eventData.ticket_tiers} event_id ={id}/>
             <Footer />
         </>
     );
