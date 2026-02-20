@@ -117,7 +117,7 @@ const PaymentPage = () => {
 
             <div className="max-w-6xl mx-auto relative z-10">
                 <button
-                    onClick={() => navigate('/')}
+                    onClick={() => navigate('/event:id')}
                     className="flex items-center text-gray-400 hover:text-white mb-8 transition-colors group"
                 >
                     <ArrowLeft className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />

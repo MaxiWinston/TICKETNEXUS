@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Ticket } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import {NavLink} from "react-router-dom"
 
 const Navbar = () => {
     const [scrolled, setScrolled] = useState(false);
@@ -30,9 +31,10 @@ const Navbar = () => {
                 {/* Logo */}
                 <div className="flex items-center space-x-2">
                     <Ticket className="w-8 h-8 text-accent" />
-                    <span className="text-2xl font-bold font-display tracking-wider text-white">
+                  <NavLink to="/dashboard" ><span className="text-2xl font-bold font-display tracking-wider text-white">
                         TICKET<span className="text-accent">MOST</span>
-                    </span>
+                    </span></NavLink>
+                    
                 </div>
 
                 {/* Desktop Links */}
