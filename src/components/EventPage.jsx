@@ -76,7 +76,7 @@ const EventPage = () => {
     }, []);
 
     const eventData = event //|| mockEvent;
-    const finalDate = manualDate || eventData.date;
+    const finalDate = eventData.date;
 
     return (
         <>
