@@ -375,7 +375,7 @@ const Dashboard = () => {
                                 </div>
                                 <div className="mt-6 pt-4 border-t border-white/10 flex justify-between items-center text-sm">
                                     <span className="text-green-400">Active</span>
-                                    <span className="text-gray-500">{(Math.random() * 100).toFixed(0)} sold (Mock)</span>
+                                    {/* <span className="text-gray-500">{(Math.random() * 100).toFixed(0)} sold (Mock)</span> */}
                                 </div>
                             </div>
                         ))

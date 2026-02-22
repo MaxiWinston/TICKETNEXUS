@@ -60,12 +60,12 @@ const EventPage = () => {
     }, [id]);
 
     // Mock event data for immediate display (Fallback)
-    const mockEvent = {
-        title: "TICKET MOST",
-        date: new Date(new Date().setDate(new Date().getDate() + 14)).toISOString(),
-        location: "Secret Warehouse, Accra",
-        ticket_price: 89
-    };
+    // const mockEvent = {
+    //     title: "TICKET MOST",
+    //     date: new Date(new Date().setDate(new Date().getDate() + 14)).toISOString(),
+    //     location: "Secret Warehouse, Accra",
+    //     ticket_price: 89
+    // };
 
     const [manualDate, setManualDate] = useState(null);
     const [isOrganizer, setIsOrganizer] = useState(false);
@@ -75,7 +75,7 @@ const EventPage = () => {
         setIsOrganizer(!!session);
     }, []);
 
-    const eventData = event || mockEvent;
+    const eventData = event //|| mockEvent;
     const finalDate = manualDate || eventData.date;
 
     return (
