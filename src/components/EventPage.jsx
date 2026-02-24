@@ -27,7 +27,7 @@ const EventPage = () => {
                     .from('events')
                     .select('*')
                     .eq('id', id)
-                    .single();
+                    .single();                   
 
                 if (data) {
                     setEvent(data);
@@ -41,6 +41,7 @@ const EventPage = () => {
             } catch (err) {
                 console.error("Fetch exception:", err);
             }
+            
 
             // Priority 2: Local Storage (Fallback for demo/offline)
             const storedEvents = JSON.parse(localStorage.getItem('ticket_nexus_events') || '[]');
@@ -59,15 +60,6 @@ const EventPage = () => {
         fetchEvent();
     }, [id]);
 
-    // Mock event data for immediate display (Fallback)
-    // const mockEvent = {
-    //     title: "TICKET MOST",
-    //     date: new Date(new Date().setDate(new Date().getDate() + 14)).toISOString(),
-    //     location: "Secret Warehouse, Accra",
-    //     ticket_price: 89
-    // };
-
-    const [manualDate, setManualDate] = useState(null);
     const [isOrganizer, setIsOrganizer] = useState(false);
 
     useEffect(() => {
@@ -75,17 +67,26 @@ const EventPage = () => {
         setIsOrganizer(!!session);
     }, []);
 
-    const eventData = event //|| mockEvent;
-    const finalDate = eventData.date;
+if (loading) {
+    return <div className="text-white p-10">Loading...</div>;
+}
+    if (!event && !loading) {
+  return <div className="text-white p-10">Event not found.</div>;
+}
+    const eventData = event;
+
+    
+
+    
 
     return (
         <>
-            <Navbar />
+            {/* <Navbar /> */}
 
             <Navbar />
 
-            <Hero title={eventData.title} eventDate={finalDate} />
-            <EventDetails location={eventData.location} date={finalDate} dressCode={eventData.dress_code} />
+            <Hero title={eventData.title} eventDate={eventData.date} />
+            <EventDetails location={eventData.location} date={eventData.date} dressCode={eventData.dress_code} />
             <TicketCards basePrice={eventData.ticket_price} ticketTiers={eventData.ticket_tiers} event_id ={id}/>
             <Footer />
         </>
