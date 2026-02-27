@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
 import { ArrowRight, Lock, Mail } from 'lucide-react';
-import { motion } from 'framer-motion';
 
 const Login = () => {
     const [loading, setLoading] = useState(false);
@@ -40,16 +39,14 @@ const Login = () => {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-secondary/20 rounded-full blur-[120px]" />
             </div>
 
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+            <div
                 className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl transition-all duration-300 max-w-md w-full p-8 relative z-10 rounded-2xl border-accent/20"
             >
                 <h2 className="text-3xl font-bold text-white mb-2 text-center">Welcome Back</h2>
                 <p className="text-gray-400 mb-8 text-center">Login to manage your events</p>
 
                 {error && (
-                    <div className="bg-red-500/10 border border-red-500/20 text-red-500 p-3 rounded-lg mb-4 text-sm text-center">
+                    <div className="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-lg mb-4 text-sm text-center">
                         {error}
                     </div>
                 )}
@@ -98,7 +95,7 @@ const Login = () => {
                 <p className="mt-8 text-center text-gray-400 text-sm">
                     Don't have an account? <Link to="/signup" className="text-accent hover:underline">Sign Up</Link>
                 </p>
-            </motion.div>
+            </div>
         </div>
     );
 };

@@ -15,7 +15,7 @@ const PaymentPage = () => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
-    const [isSuccess, setIsSuccess] = useState(false);
+    const [successData, setSuccessData] = useState(null);
     const [loading, setLoading] = useState(false);
 
     // Calculate total amount (adding fee) - Paystack amount is in kobo
@@ -49,7 +49,7 @@ const PaymentPage = () => {
         setLoading(true);
         try {
             // Save ticket to Supabase
-            const { error } = await supabase
+            const { data: ticketData, error } = await supabase
                 .from('tickets')
                 .insert([
                     {
@@ -62,11 +62,47 @@ const PaymentPage = () => {
                         payment_reference: reference.reference,
                         status: 'paid'
                     }
-                ]);
+                ])
+                .select()
+                .single();
 
             if (error) throw error;
 
-            setIsSuccess(true);
+            // Now we have the ticket ID to generate the viewable ticket URL & QR Code
+            const ticketId = ticketData.id;
+            const ticketUrl = `${window.location.origin}/ticket/${ticketId}`;
+            const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(ticketUrl)}`;
+
+            // Send EmailJS Email
+            try {
+                // To enable this, add VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, and VITE_EMAILJS_PUBLIC_KEY to your .env file
+                const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'default_service';
+                const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'default_template';
+                const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+                
+                if (publicKey) {
+                    await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            service_id: serviceId,
+                            template_id: templateId,
+                            user_id: publicKey,
+                            template_params: {
+                                to_email: email,
+                                user_name: name,
+                                ticket_type: ticketType,
+                                ticket_link: ticketUrl,
+                                qr_code_url: qrCodeUrl
+                            }
+                        })
+                    });
+                }
+            } catch (emailError) {
+                console.error("Failed to send email:", emailError);
+            }
+
+            setSuccessData({ ticketId, ticketUrl, qrCodeUrl });
         } catch (error) {
             console.error('Error saving ticket:', error);
             alert('Payment successful but failed to save ticket. Please contact support.');
@@ -82,7 +118,7 @@ const PaymentPage = () => {
         initializePayment(handleSuccess, componentProps.onClose);
     };
 
-    if (isSuccess) {
+    if (successData) {
         return (
             <div className="min-h-screen bg-primary flex items-center justify-center p-6 relative overflow-hidden">
                 <div className="absolute inset-0 bg-primary">
@@ -98,7 +134,23 @@ const PaymentPage = () => {
                         <CheckCircle className="w-10 h-10 text-accent" />
                     </div>
                     <h2 className="text-3xl font-bold text-white mb-2">Access Granted</h2>
-                    <p className="text-gray-400 mb-8">Your {ticketType} ticket has been confirmed. A receipt has been sent to {email}.</p>
+                    <p className="text-gray-400 mb-6">Your {ticketType} ticket has been confirmed. An email with this QR code has been sent to {email}.</p>
+                    
+                    <div className="bg-white p-4 rounded-xl mx-auto w-48 h-48 mb-6 flex items-center justify-center">
+                        <img 
+                            src={successData.qrCodeUrl} 
+                            alt="Ticket QR Code" 
+                            className="w-full h-full object-contain"
+                        />
+                    </div>
+
+                    <button
+                        onClick={() => navigate(`/ticket/${successData.ticketId}`)}
+                        className="w-full py-3 bg-transparent border border-accent text-accent font-bold uppercase tracking-wider hover:bg-accent hover:text-black transition-colors rounded-lg mb-4"
+                    >
+                        View Digital Ticket
+                    </button>
+
                     <button
                         onClick={() => navigate('/')}
                         className="w-full py-4 bg-accent text-black font-bold uppercase tracking-wider hover:bg-white transition-colors rounded-lg"

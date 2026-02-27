@@ -54,12 +54,6 @@ const PlatformHome = () => {
                                 <Zap className="w-5 h-5 fill-black" />
                                 Create Your Event
                             </Link>
-                            <Link
-                                to="/events/demo"
-                                className="w-full md:w-auto px-8 py-4 bg-white/5 border border-white/10 text-white font-bold rounded-lg hover:bg-white/10 transition-all flex items-center justify-center gap-2"
-                            >
-                                View Demo Page <ArrowRight className="w-4 h-4" />
-                            </Link>
                         </div>
                     </motion.div>
                 </div>
