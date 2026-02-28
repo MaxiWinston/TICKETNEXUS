@@ -75,18 +75,34 @@ const EventPage = () => {
         setIsOrganizer(!!session);
     }, []);
 
-    const eventData = event //|| mockEvent;
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-primary flex flex-col items-center justify-center">
+                <div className="w-12 h-12 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
+                <p className="text-accent mt-4 font-bold tracking-widest uppercase">Loading Event...</p>
+            </div>
+        );
+    }
+
+    if (!event) {
+        return (
+            <div className="min-h-screen bg-primary flex flex-col items-center justify-center text-white">
+                <h2 className="text-2xl font-bold mb-2">Event Not Found</h2>
+                <p className="text-gray-400">This event may have been removed or the link is invalid.</p>
+            </div>
+        );
+    }
+
+    const eventData = event;
     const finalDate = eventData.date;
 
     return (
         <>
             <Navbar />
 
-            <Navbar />
-
             <Hero title={eventData.title} eventDate={finalDate} />
             <EventDetails location={eventData.location} date={finalDate} dressCode={eventData.dress_code} />
-            <TicketCards basePrice={eventData.ticket_price} ticketTiers={eventData.ticket_tiers} event_id ={id}/>
+            <TicketCards basePrice={eventData.ticket_price} ticketTiers={eventData.ticket_tiers} event_id={id} />
             <Footer />
         </>
     );
